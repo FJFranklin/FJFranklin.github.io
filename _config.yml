@@ -1,6 +1,6 @@
 theme: jekyll-theme-cayman
 author: Francis James Franklin
-title: Forward in a Not-So-Straight Line
+name: Forward in a Not-So-Straight Line
 description: Collected code projects and drafts
 
 # Set the Sass partials directory, as we're using @imports
