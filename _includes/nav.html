@@ -1,6 +1,8 @@
 <nav class="nav-primary" role="navigation" >
-Tags:
-{% for tag in page.tags %}
-  <a href="/tag.html#{{ tag | slugify }}"> {{ tag }} </a>
-{% endfor %}
+  Posted in
+  <a href="/categories.html#{{ page.category | slugify }}"> {{ page.category }} </a>
+  and tagged:
+  {% for tag in page.tags %}
+  <a href="/tags.html#{{ tag | slugify }}"> {{ tag }} </a>
+  {% endfor %}
 </nav>
