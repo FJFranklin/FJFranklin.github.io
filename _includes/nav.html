@@ -1,9 +1,5 @@
 <nav class="nav-primary" role="navigation" >
-{% comment %}
-=======================
-The purpose of this snippet is to list all the tags you have in your site.
-=======================
-{% endcomment %}
+Tags:
 {% for tag in page.tags %}
   <a href="/tag.html#{{ tag | slugify }}"> {{ tag }} </a>
 {% endfor %}
