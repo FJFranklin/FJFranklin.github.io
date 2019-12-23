@@ -1,5 +1,10 @@
 <nav class="nav-primary" role="navigation" >
-  {% for k in page.keywords %}
-    <a href="/about.html#{{ k }}">{{ k }}</a>&nbsp;
-  {% endfor %}
+{% comment %}
+=======================
+The purpose of this snippet is to list all the tags you have in your site.
+=======================
+{% endcomment %}
+{% for tag in tags %}
+  <a href="/tag.html#{{ tag | slugify }}"> {{ tag }} </a>
+{% endfor %}
 </nav>
