@@ -1,0 +1,26 @@
+---
+layout: post
+title: Design Of A Smart Vehicle
+description: What exactly is a smart vehicle?
+category: Car
+tags: [smart, vehicle, design]
+---
+
+<p>This blog and the projects it discusses revolve around the design of systems for controlling smart vehicles such as model cars or even small-scale railway locomotives. One of the main projects I'm working on is a portable vehicle for use on full-size railway track: the <em>Track Buggy</em>. The aim is not to produce production-level, application-specific code, but rather to develop a number of useful component systems that can be integrated into such projects. Projects are designed variously for Raspberry Pi, Teensy and Arduino.</p>
+<p>In general, a smart vehicle will have:</p>
+<ul>
+  <li>A power source, e.g., one or more batteries, possibly of different voltages.</li>
+  <li>A drive system, consisting of one or more motors to control propulsion and steering.</li>
+  <li>A variety of sensors to provide feedback on position and speed, obstacle detection, etc.</li>
+  <li>A 'driver' interface, ideally a graphical user interface, that relays commands and feedback.</li>
+  <li>An onboard/embedded system for analysing sensor feedback and executing commands.</li>
+</ul>
+<p>The key difference between a <em>smart</em> vehicle and a remote-controlled vehicle is that a smart vehicle is able to operate and take decisions without active commands. For example:</p>
+<ul>
+  <li>Based on GPS and compass measurements, continually adjust steering to aim in a user-specified direction or towards a user-specified target.</li>
+  <li>Based on wheel encoder measurements, precise and instantaneous control of speed and/or position, e.g., proportional–integral–derivative (PID) control.</li>
+  <li>Perform a safe system halt when communication with the user is lost, i.e., we don't want a runaway train.</li>
+</ul>
+<p>One illustration of these principles is <a href="https://github.com/FJFranklin/cariot">cariot</a>, which provides browser-based remote control for an Arduino-controlled car via MQTT.</p>
+<p><img src="https://github.com//FJFranklin/cariot/raw/master/images/cariot.png" style="max-width:100%;" /></p>
+<p>The dashboard (the graphical user interface) is created using web standards and can be used in any browser, therefore, without any need to install special software. A Raspberry Pi is used as both WiFi-hub, webserver and MQTT-broker, and communication between UI and the 'car' is via MQTT messages. In this case, the 'car' is a program on the Raspberry Pi that relays commands to and from the Arduino controlling the hardware</p>
