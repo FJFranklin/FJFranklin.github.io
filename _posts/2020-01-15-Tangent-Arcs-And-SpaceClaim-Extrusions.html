@@ -1,0 +1,68 @@
+---
+layout: post
+title: Tangent Arcs and SpaceClaim Extrusions
+description: Using Python for 2D sketching and 3D solid modelling
+category: SpaceClaim
+tags: [Python, SpaceClaim, CAD, sketch, hook, ANSYS]
+---
+
+<div style="float:right;width:30%;">
+  <img style="align:center;max-width:100%;" src="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-2-hook-SpaceClaim-extruded.png"/>
+  <p style="font-style:italic;font-size:smaller;">Model of a hook to be cut from 8mm-thick sheet steel.</p>
+</div>
+
+<p>One of the student exercises I have helped with in the past is to design a hook capable of supporting a 30kN load without yielding.
+  The main limitation is that the hook should be cut from 8mm-thick high-strength steel, and the laser cutter can only handle straight lines and circular arcs.
+  Sharp corners and tight radii should also be avoided, since these cause the laser cutter to pause briefly, and the additional heat can damage the material
+  unnecessarily. In summary, the outline of the hook should be a single continuous path with tangent transitions - and without using ellipses or splines.</p>
+
+<p>Professional CAD packages are very capable of solving the geometric constraints that designers impose. Generally it is also possible to
+  parameterise key dimensions so that multiple similar designs can be analysed in sequence. Major packages such as ANSYS can even perform optimisation,
+  searching for the specific set of parameters - and the corresponding design - that minimises the stress, or the mass, or some other selected property.</p>
+
+<p>CAD packages tend to work interactively, but there are times when it is useful to be able to construct 3D models from code. Lately I have been exploring
+  ANSYS SpaceClaim's scripting capability. This uses <a href="https://ironpython.net/documentation/dotnet/dotnet.html">IronPython</a>, a version of Python
+  that integrates with Microsoft's .NET framework. Very minimal documentation is provided along with the ANSYS SpaceClaim installation, but the SpaceClaim
+  interface includes some basic examples, and lets you record the interactive session as a script (although this is often a little muddled). There are also
+  a few useful videos on YouTube, e.g.:
+  <a href="https://www.youtube.com/watch?v=Av_1Jo1IjkI">How to use scripting features in ANSYS SpaceClaim to run your CAD design iterations</a>
+  and
+  <a href="https://www.youtube.com/watch?v=EQFMuUtpRlo">SpaceClaim for Parametric Analysis</a>.</p>
+
+<p>I'm gradually learning SpaceClaim scripting. My original goal was to be able to parameterise a 3D NURBS surface representing a ship's hull. Eventually this
+  had so many parameters that it was simpler to read them from a file. More recently, I discovered that ANSYS Static Structural will mesh a SpaceClaim helical
+  design far better than it will an identical solid produced in Autodesk Inventor, but parametric sketches are (in my opinion) a lot easier to construct in the
+  latter. Being able to sketch the profile in SpaceClaim using Python leads to a simple and versatile 3D model.</p>
+
+<p>The need for a simple sketching engine capable of stitching together lines and circular arcs (with smooth circular-arc transitions) has led to
+  <a href="https://github.com//FJFranklin/wifi-py-rpi-car-controller/sketch/">sketch</a>, designed to work with either SpaceClaim or MatPlotLib. The latter
+  shows the construction circles and centres:</p>
+
+<div style="align:center;width:90%;">
+  <img style="align:center;max-width:100%;" src="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-0.png"/>
+  <p style="font-style:italic;font-size:smaller;">Left: Straight lines intersecting with optional transition radius. Right: Curved transitions between arcs.</p>
+</div>
+
+<div style="align:center;width:90%;">
+  <img style="align:center;max-width:100%;" src="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-1.png"/>
+  <p style="font-style:italic;font-size:smaller;">Various curved transitions between straight lines and circular arcs.</p>
+</div>
+
+The same, sketched in SpaceClaim, with automatic detection of closed loops to form surfaces, can be seen here:
+<ul>
+  <li><a href="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-0-SpaceClaim.png">Straight lines and arc-arc transitions.</a></li>
+  <li><a href="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-1-SpaceClaim.png">Arc-line transitions (sketch).</a></li>
+  <li><a href="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-1-SpaceClaim-surfaces.png">Arc-line transitions (surfaces).</a></li>
+</ul>
+
+<p>This is not, of course, intended as a replacement for SpaceClaim, which is far more powerful when used interactively. It's just a way to use SpaceClaim to build simple
+  parameteric models. It's one thing to
+  <a href="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-2-hook.png">sketch the outline of a hook</a>,
+  quite something else to have a 3D geometry ready for FEA analysis in ANSYS:</p>
+
+<div style="align:center;width:90%;">
+  <img style="align:center;max-width:100%;" src="https://github.com//FJFranklin/wifi-py-rpi-car-controller/raw/master/sketch/images/arc-test-2-hook-SpaceClaim-selections.png"/>
+  <p style="font-style:italic;font-size:smaller;">Extruded hook with <em>Named Selections</em>.</p>
+</div>
+
+<p>It's still very much a work-in-progress, and hopefully will not be completely broken when I update from API v16 to v17...</p>
